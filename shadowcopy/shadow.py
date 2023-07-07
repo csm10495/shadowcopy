@@ -8,6 +8,7 @@ import os
 import shutil
 import textwrap
 from pathlib import Path
+from typing import Union
 
 import wmi
 
@@ -31,7 +32,7 @@ def _is_admin() -> bool:
     return ctypes.windll.shell32.IsUserAnAdmin() != 0
 
 
-def shadow_copy(src: str | Path, dst: str | Path) -> None:
+def shadow_copy(src: Union[str, Path], dst: Union[str, Path]) -> None:
     """
     Copies the src file to the dst path using a shadow copy.
 
