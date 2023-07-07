@@ -16,7 +16,7 @@ jobs:
     with:
       python-version: '3.11'
       operating-system: 'ubuntu-latest'
-      cmd-to-run: '[PROJECT] --help > help_output.txt'
+      cmd-to-run: 'shadowcopy --help > help_output.txt'
       file-to-update: README.md
 
   version-bump:
@@ -39,8 +39,8 @@ jobs:
     with:
       python-version: '3.11'
       operating-system: 'windows-latest'
-      executable-name: [PROJECT].exe
-      entrypoint-file: [PROJECT]/__main__.py
+      executable-name: shadowcopy.exe
+      entrypoint-file: shadowcopy/__main__.py
 
   pypi-upload:
     needs: pdoc3

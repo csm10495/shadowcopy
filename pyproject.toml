@@ -1,8 +1,8 @@
 [project]
-name = "[PROJECT]"
-description = "A project for [PROJECT]"
+name = "shadowcopy"
+description = "A project for shadowcopy"
 dynamic = ["version"]
-authors = [{name = "[USER]", email = "[EMAIL]"}]
+authors = [{name = "csm10495", email = "csm10495@gmail.com"}]
 license = {text = "MIT License"}
 classifiers = [
     "Intended Audience :: Developers",
@@ -16,20 +16,20 @@ requires-python = ">=3.7"
 dependencies = []
 
 [project.urls]
-homepage = "https://github.com/[USER]/[PROJECT]"
-repository = "https://github.com/[USER]/[PROJECT]"
-documentation  = "https://[USER].github.io/[PROJECT]"
+homepage = "https://github.com/csm10495/shadowcopy"
+repository = "https://github.com/csm10495/shadowcopy"
+documentation  = "https://csm10495.github.io/shadowcopy"
 
 [project.readme]
 file = "README.md"
 content-type = "text/markdown"
 
 [tool.setuptools]
-packages = ["[PROJECT]"]
+packages = ["shadowcopy"]
 include-package-data = true
 
 [tool.setuptools.dynamic]
-version = {attr = "[PROJECT].__version__"}
+version = {attr = "shadowcopy.__version__"}
 
 [tool.pytest.ini_options]
 pythonpath = [
