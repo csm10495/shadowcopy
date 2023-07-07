@@ -4,7 +4,7 @@ shadowcopy is a module for performing file copies from 'shadows' on Windows. Sha
 
 More info on shadow copies in Windows can be found [here](https://learn.microsoft.com/en-us/windows-server/storage/file-server/volume-shadow-copy-service)
 
-Creating/Deleting shadown copies requires admin access.
+Creating/Deleting shadow copies requires admin access.
 
 ## Installing
 
