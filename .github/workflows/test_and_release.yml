@@ -7,20 +7,10 @@ jobs:
     uses: csm10495/actions/.github/workflows/pytest.yml@master
     with:
       python-versions: '["3.7", "3.8", "3.9", "3.10", "3.11"]'
-      # by default, operating-systems points to ubuntu/mac/windows
-
-  markdown-autodocs:
-    needs: test
-    if: github.event_name != 'pull_request'
-    uses: csm10495/actions/.github/workflows/markdown-autodocs.yml@master
-    with:
-      python-version: '3.11'
-      operating-system: 'ubuntu-latest'
-      cmd-to-run: 'shadowcopy --help > help_output.txt'
-      file-to-update: README.md
+      operating-systems: '["windows-latest"]'
 
   version-bump:
-    needs: markdown-autodocs
+    needs: test
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
     uses: csm10495/actions/.github/workflows/version-bump.yml@master
 
@@ -30,17 +20,7 @@ jobs:
     uses: csm10495/actions/.github/workflows/pdoc3.yml@master
     with:
       python-version: '3.11'
-      operating-system: 'ubuntu-latest'
-
-  pyinstaller:
-    needs: pdoc3
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
-    uses: csm10495/actions/.github/workflows/pyinstaller.yml@master
-    with:
-      python-version: '3.11'
       operating-system: 'windows-latest'
-      executable-name: shadowcopy.exe
-      entrypoint-file: shadowcopy/__main__.py
 
   pypi-upload:
     needs: pdoc3
@@ -51,6 +31,6 @@ jobs:
     secrets: inherit
 
   github-release:
-    needs: pyinstaller
+    needs: pdoc3
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
     uses: csm10495/actions/.github/workflows/github-release.yml@master
