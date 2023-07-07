@@ -1,0 +1,41 @@
+[project]
+name = "[PROJECT]"
+description = "A project for [PROJECT]"
+dynamic = ["version"]
+authors = [{name = "[USER]", email = "[EMAIL]"}]
+license = {text = "MIT License"}
+classifiers = [
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: POSIX",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+requires-python = ">=3.7"
+dependencies = []
+
+[project.urls]
+homepage = "https://github.com/[USER]/[PROJECT]"
+repository = "https://github.com/[USER]/[PROJECT]"
+documentation  = "https://[USER].github.io/[PROJECT]"
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[tool.setuptools]
+packages = ["[PROJECT]"]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {attr = "[PROJECT].__version__"}
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
+
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"

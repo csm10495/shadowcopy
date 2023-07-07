@@ -1,0 +1,56 @@
+name: Run tests and release
+
+on: push
+
+jobs:
+  test:
+    uses: csm10495/actions/.github/workflows/pytest.yml@master
+    with:
+      python-versions: '["3.7", "3.8", "3.9", "3.10", "3.11"]'
+      # by default, operating-systems points to ubuntu/mac/windows
+
+  markdown-autodocs:
+    needs: test
+    if: github.event_name != 'pull_request'
+    uses: csm10495/actions/.github/workflows/markdown-autodocs.yml@master
+    with:
+      python-version: '3.11'
+      operating-system: 'ubuntu-latest'
+      cmd-to-run: '[PROJECT] --help > help_output.txt'
+      file-to-update: README.md
+
+  version-bump:
+    needs: markdown-autodocs
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    uses: csm10495/actions/.github/workflows/version-bump.yml@master
+
+  pdoc3:
+    needs: version-bump
+    if: github.event_name != 'pull_request'
+    uses: csm10495/actions/.github/workflows/pdoc3.yml@master
+    with:
+      python-version: '3.11'
+      operating-system: 'ubuntu-latest'
+
+  pyinstaller:
+    needs: pdoc3
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    uses: csm10495/actions/.github/workflows/pyinstaller.yml@master
+    with:
+      python-version: '3.11'
+      operating-system: 'windows-latest'
+      executable-name: [PROJECT].exe
+      entrypoint-file: [PROJECT]/__main__.py
+
+  pypi-upload:
+    needs: pdoc3
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    uses: csm10495/actions/.github/workflows/pypi-upload.yml@master
+    with:
+      python-version: '3.11'
+    secrets: inherit
+
+  github-release:
+    needs: pyinstaller
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    uses: csm10495/actions/.github/workflows/github-release.yml@master
